@@ -61,6 +61,7 @@ const handleDelete = () => {
 .item-remove-button {
   display: flex;
   color: hsl(var(--muted-foreground));
+  transition: all 0.05s;
 
   &:hover {
     color: hsl(var(--foreground));

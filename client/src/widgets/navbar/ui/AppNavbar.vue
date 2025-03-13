@@ -18,9 +18,9 @@ import { Tabs, TabsList, TabsTrigger } from '@/shared/ui/tabs'
         <RouterLink to="/?type=note">
           <TabsTrigger value="note">Notes</TabsTrigger>
         </RouterLink>
-        <RouterLink to="/?type=project">
+        <!-- <RouterLink to="/?type=project">
           <TabsTrigger value="project">Projects</TabsTrigger>
-        </RouterLink>
+        </RouterLink> -->
       </TabsList>
     </Tabs>
   </nav>

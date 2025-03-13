@@ -16,7 +16,7 @@ import { Carousel, CarouselContent, CarouselItem } from '@/shared/ui/carousel'
 import { Card, CardContent } from '@/shared/ui/card'
 
 const mode = useColorMode()
-const themes = ['light', 'dark', 'dark', 'dark', 'dark']
+const themes = ['dark', 'light']
 const switchMode = (theme: any) => mode.value = theme
 </script>
 

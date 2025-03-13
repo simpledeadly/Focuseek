@@ -135,6 +135,7 @@ const { changeItemType } = useChangeItemType(items)
 .item-list {
   min-width: 350px;
   max-width: 60% or 1024px;
+  margin-bottom: 5rem;
 }
 
 .empty {

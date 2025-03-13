@@ -13,6 +13,19 @@
   transition: all 0.2s, opacity 0.02s;
 }
 
+.light .loader-overlay {
+  animation: light-grader 1s linear infinite;
+
+  .loader span {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    background: #010101;
+    animation: loader 1.5s linear infinite;
+  }
+}
+
 .loader-overlay {
   display: flex;
   justify-content: center;
@@ -23,7 +36,6 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: #f15f79;
   // animation: grader 1s linear infinite;
   animation: dark-grader 1s linear infinite;
 }
@@ -58,9 +70,9 @@
   }
 }
 
-@keyframes grader {
+@keyframes light-grader {
   from {
-    background: #f15f79;
+    background: #fff;
   }
   to {
     background: #fff;
@@ -69,19 +81,10 @@
 
 @keyframes dark-grader {
   from {
-    background: #f15f79;
+    background: #09090B;
   }
   to {
-    background: #101111;
-  }
-}
-
-@keyframes nord-grader {
-  from {
-    background: #f15f79;
-  }
-  to {
-    background: #3b4252;
+    background: #09090B;
   }
 }
 </style>

@@ -89,7 +89,6 @@ const cancelChanges = () => {
 .item-title {
   &__inner {
     display: flex;
-    flex-wrap: wrap;
     gap: calc(var(--radius) - 2px);
     margin-left: 1px;
     text-align: left;
@@ -97,17 +96,35 @@ const cancelChanges = () => {
 
   &__input {
     min-width: 190px;
-    max-width: 800px;
     margin-right: calc(var(--radius) - 2px);
     margin-left: calc(var(--radius) - 7px);
     background: hsl(var(--primary-background));
-    border: none;
+    // border: 1px solid hsl(var(--muted-foreground));
     border-radius: calc(var(--radius) - 2px);
     outline: none;
   }
 
   &__save-button {
+    color: hsl(var(--muted-foreground));
+    // color: #00b749;
     margin-right: calc(var(--radius) - 2px);
+    transition: all 0.05s;
+
+    &:hover {
+      color: hsl(var(--foreground));
+      // color: #08db59;
+    }
+  }
+
+  &__cancel-button {
+    color: hsl(var(--muted-foreground));
+    // color: #ad0303;
+    transition: all 0.05s;
+
+    &:hover {
+      color: hsl(var(--foreground));
+      // color: #e01111;
+    }
   }
 
   &__label {
@@ -120,6 +137,7 @@ const cancelChanges = () => {
   &__edit-button {
     color: hsl(var(--muted-foreground));
     opacity: 0.5;
+    transition: all 0.05s;
 
     &:hover {
       color: hsl(var(--foreground));

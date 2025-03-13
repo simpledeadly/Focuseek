@@ -5,6 +5,7 @@ import 'dotenv/config'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { prisma } from './prismaClient'
+import { authenticate } from './middlewares/authentication'
 
 type ItemType = 'todo' | 'note' | 'project'
 
@@ -22,67 +23,6 @@ export type SubItem = {
   type: ItemType
   isDone?: boolean
 }
-
-let items: Item[] = [
-  {
-    id: Date.now(),
-    title: 'Добавить настройки',
-    type: 'todo',
-    isDone: true,
-  },
-  {
-    id: Date.now() + 1,
-    title: 'Валидировать ошибки по приложению',
-    type: 'todo',
-    isDone: false,
-  },
-  {
-    id: Date.now() + 2,
-    title: 'Добавить хоткеи',
-    type: 'todo',
-    isDone: false,
-  },
-  {
-    id: Date.now() + 3,
-    title: 'Очень крутой проект',
-    type: 'project',
-    isDone: false,
-    subtodos: [
-      {
-        id: Date.now() + 4,
-        title: 'first subitem, this is todo',
-        isDone: false,
-        type: 'todo',
-      },
-      {
-        id: Date.now() + 5,
-        title: 'second subitem, todo too',
-        isDone: true,
-        type: 'todo',
-      },
-      {
-        id: Date.now() + 6,
-        title: 'third subitem but this is note',
-        type: 'note',
-      },
-    ],
-  },
-  {
-    id: Date.now() + 7,
-    title: 'Затемнить цвет чекбоксов',
-    type: 'note',
-  },
-  {
-    id: Date.now() + 8,
-    title: 'Подобрать цвета для типов, сделать рамку',
-    type: 'note',
-  },
-  {
-    id: Date.now() + 9,
-    title: 'Сделать карандаш видимым',
-    type: 'note',
-  },
-]
 
 const app = express()
 const PORT: string | number = process.env.PORT || 3000
@@ -159,30 +99,6 @@ app.post('/api/login', async (req, res) => {
 })
 
 // == ITEMS ==
-
-// Middleware
-const authenticate = async (req: any, res: any, next: any) => {
-  const token = req.headers.authorization
-  if (!token) {
-    return res.status(401).json({ message: 'Неавторизованный доступ' })
-  }
-
-  try {
-    const decoded = jwt.verify(token, 'your_jwt_secret')
-    console.log('DECODED:', decoded)
-
-    if (typeof decoded === 'object' && decoded !== null) {
-      req.userId = decoded.id
-      console.log(req.userId)
-      next()
-    } else {
-      console.error('Проблема с decoded в middleware')
-    }
-  } catch (error) {
-    console.error('Ошибка при проверке токена:', error)
-    res.status(401).json({ message: 'Неправильный формат токена' })
-  }
-}
 
 app.get('/api/items', authenticate, async (req, res) => {
   try {

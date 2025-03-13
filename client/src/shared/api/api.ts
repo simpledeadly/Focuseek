@@ -9,8 +9,6 @@ const { setUserId, getUserId } = useAuth()
 
 // === USERS ===
 
-// ! clean up logs
-
 export const registerUser = async (username: string, password: string): Promise<User> => {
   try {
     const response = await axios.post(`${API_URL}/register`, { username, password })
@@ -36,12 +34,13 @@ export const loginUser = async (username: string, password: string): Promise<Use
     const token = response.data.token
     console.log('login userId:', userId)
     console.log('login token:', token)
-
+    
     localStorage.setItem('token', token)
     setUserId(userId)
-
+    
     return response.data
-  } catch (error) {
+  } catch (e) {
+    console.error('Ошибка при входе:', e)
     throw new Error('Ошибка входа')
   }
 }
@@ -58,8 +57,8 @@ export const fetchItemsFromServer = async () => {
     })
     console.log('Данные успешно получены:', response.data)
     return response.data
-  } catch (error) {
-    console.error('Ошибка при получении данных:', error)
+  } catch (e) {
+    console.error('Ошибка при получении данных:', e)
     throw new Error('Ошибка при получении данных')
   }
 }

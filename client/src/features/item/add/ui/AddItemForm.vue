@@ -3,10 +3,10 @@ import { ref } from 'vue'
 import { Input } from '@/shared/ui/input'
 import { Button } from '@/shared/ui/button'
 import { Separator } from '@/shared/ui/separator'
-import { useItemType } from '@/features/item/filter'
-import { capitalizeAndAppendS } from '@/shared/lib/utils'
+import { useFilterItems, useItemType } from '@/features/item/filter'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/shared/ui/tooltip'
 import { CirclePlus } from 'lucide-vue-next'
+import { useItems } from '@/entities/item'
 
 const emit = defineEmits<{
   (e: 'submit', value: string): void
@@ -27,6 +27,9 @@ const handleSubmit = () => {
   }
   itemTitle.value = ''
 }
+
+const { items } = useItems()
+const { filteredItems } = useFilterItems(items)
 </script>
 
 <template>
@@ -39,7 +42,7 @@ const handleSubmit = () => {
         <Input
           v-model="itemTitle"
           type="text"
-          :placeholder="`Enter ${itemType}'s title`"
+          :placeholder="`Enter title`"
           class="add-item-form__input"
         />
         <slot
@@ -66,7 +69,8 @@ const handleSubmit = () => {
         </TooltipProvider>
       </form>
     </div>
-    <Separator :label="capitalizeAndAppendS(itemType)" />
+    <!-- <Separator :label="capitalizeAndAppendS(itemType)" />/ -->
+    <Separator :label="filteredItems.length === 0 ? 'No ' + itemType + 's' : filteredItems.length + ' ' + itemType + 's'" />
   </div>
 </template>
 
