@@ -1,5 +1,5 @@
-import { filterItemsByType, isItemType, Item, type ItemType } from '@/entities/item'
-import { computed, ShallowRef } from 'vue'
+import { filterItemsByType, filterDoneItems, isItemType, Item, type ItemType } from '@/entities/item'
+import { computed, ref, ShallowRef } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 export const useItemType = () => {
@@ -19,12 +19,19 @@ export const useItemType = () => {
   return { itemType }
 }
 
+export const useHideDone = () => {
+  const isHideDone = ref(JSON.parse(localStorage.getItem('hide')!) || false)
+  
+  return { isHideDone }
+}
+
 export const useFilterItems = (items: ShallowRef<Item[]>) => {
   const { itemType } = useItemType()
+  const { isHideDone } = useHideDone()
 
   const filteredItems = computed(() => {
-    return filterItemsByType(items.value, itemType.value)
+    return filterItemsByType(isHideDone.value ? filterDoneItems(items.value) : items.value, itemType.value)
   })
 
-  return { itemType, filteredItems }
+  return { itemType, filteredItems, isHideDone }
 }

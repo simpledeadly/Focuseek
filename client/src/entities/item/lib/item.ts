@@ -34,5 +34,9 @@ export const replaceItemInList = (itemList: Item[], newItem: Item): Item[] => {
 }
 
 export const filterItemsByType = (itemList: Item[], type: ItemType): Item[] => {
-  return itemList.filter((item) => item.type === type).sort((a, b) => a.id - b.id) // * при .sort элементы на месте при их изменении
+  return itemList.filter((item) => item.type === type).sort((a, b) => a.id - b.id)
+}
+
+export const filterDoneItems = (itemList: Item[]): Item[] => {
+  return itemList.filter((item) => !item.isDone).sort((a, b) => a.id - b.id)
 }
