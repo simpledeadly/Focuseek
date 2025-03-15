@@ -4,6 +4,7 @@ const slots = defineSlots<{
   title: () => unknown
   removeButton: () => unknown
   typeSelect?: () => unknown
+  timeLeft?: () => unknown
   showSubtodosToggle?: () => unknown
   subtodos?: () => unknown
 }>()
@@ -24,6 +25,9 @@ const slots = defineSlots<{
         </div>
       </div>
       <div class="item-entity__row_part">
+        <div class="item-entity__timeLeft">
+          <slot name="timeLeft" />
+        </div>
         <div
           v-if="slots.showSubtodosToggle"
           class="item-entity__show-todos-toggle"
@@ -70,6 +74,10 @@ const slots = defineSlots<{
       gap: calc(var(--radius) - 2px);
       align-items: center;
     }
+  }
+
+  &__timeLeft {
+    display: flex;
   }
 
   &__checkbox {

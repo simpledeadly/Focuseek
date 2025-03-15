@@ -27,6 +27,7 @@ model Item {
   title    String
   type     ItemType
   isDone   Boolean?
+  deadline   String?
   userId   Int
   user     User    @relation(fields: [userId], references: [id])
 
@@ -40,6 +41,7 @@ model SubItem {
   title    String
   type     ItemType
   isDone   Boolean?
+  deadline   String?
   parentId Int?
   parent   Item?   @relation(fields: [parentId], references: [id], name: "ItemToSubItem") // Используйте то же имя отношения
 

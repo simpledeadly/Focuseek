@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { ItemEntity, useItems } from '@/entities/item'
 import { AddItemForm, useAddItem } from '@/features/item/add'
+import { useChangeItemDeadline } from '@/features/item/change-deadline'
 import { ItemTitle, useChangeItemTitle } from '@/features/item/change-title'
 import { TypeSelect, useChangeItemType } from '@/features/item/change-type'
+import { Deadline } from '@/features/item/change-deadline'
 import { ItemCheckbox, useDoneItem } from '@/features/item/done'
 import { ItemTypeSelect, useFilterItems } from '@/features/item/filter'
 import { ItemRemoveButton, useRemoveItem } from '@/features/item/remove'
 import { ProjectDrawer } from '@/widgets/projects-drawer'
 import { StickyNote } from 'lucide-vue-next'
-// import { watch } from 'vue'
 
 const { items } = useItems()
 const { itemType, filteredItems } = useFilterItems(items)
@@ -16,10 +17,8 @@ const { addItem } = useAddItem(items)
 const { removeItem } = useRemoveItem(items)
 const { toggleDoneItem } = useDoneItem(items)
 const { changeItemTitle } = useChangeItemTitle(items)
+const { changeItemDeadline } = useChangeItemDeadline(items)
 const { changeItemType } = useChangeItemType(items)
-
-// watch(items, () => console.log(items.value))
-// watch(filteredItems, () => console.log(filteredItems.value))
 </script>
 
 <template>
@@ -57,8 +56,16 @@ const { changeItemType } = useChangeItemType(items)
             @save="changeItemTitle(item, $event)"
           />
         </template>
+        <template
+          v-if="itemType !== 'note' && !item.isDone"
+          #timeLeft
+        >
+          <Deadline
+            :deadline="item.deadline"
+            @change="changeItemDeadline(item, $event)"
+          />
+        </template>
         <template #removeButton>
-          <!-- <ItemRemoveButton @remove="removeItem(item)" /> -->
           <ItemRemoveButton
             :item="item"
             @remove="removeItem(item)"

@@ -60,7 +60,7 @@ const setLoading = (value: boolean) => isLoading.value = value
 
 <style lang="scss">
 .app {
-  margin-top: 1rem;
+  padding-top: 1rem;
 
   &__logo {
     width: 88px;

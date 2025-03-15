@@ -5,8 +5,8 @@ import { Button } from '@/shared/ui/button'
 import { Separator } from '@/shared/ui/separator'
 import { useFilterItems, useItemType } from '@/features/item/filter'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/shared/ui/tooltip'
-import { CirclePlus } from 'lucide-vue-next'
 import { useItems } from '@/entities/item'
+// import { CirclePlus } from 'lucide-vue-next'
 
 const emit = defineEmits<{
   (e: 'submit', value: string): void
@@ -58,8 +58,8 @@ const { filteredItems } = useFilterItems(items)
                 class="add-item-form__input-button"
                 @click="handleSubmit"
               >
-                <CirclePlus class="w-4 h-4" />
-                <!-- Add -->
+                <!-- <CirclePlus class="w-4 h-4" /> -->
+                <p>Add</p>
               </Button>
             </TooltipTrigger>
             <TooltipContent>

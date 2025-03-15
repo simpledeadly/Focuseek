@@ -6,6 +6,7 @@ export type Item = {
   title: string
   type: ItemType
   isDone?: boolean
+  deadline?: string
   subtodos?: SubItem[]
 }
 

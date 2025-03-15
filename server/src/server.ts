@@ -14,6 +14,7 @@ export type Item = {
   title: string
   type: ItemType
   isDone?: boolean
+  deadline?: string
   subtodos?: Item[]
 }
 
@@ -22,6 +23,7 @@ export type SubItem = {
   title: string
   type: ItemType
   isDone?: boolean
+  deadline?: string
 }
 
 const app = express()
@@ -150,6 +152,7 @@ app.post('/api/items', authenticate, async (req, res) => {
           title: item.title,
           type: item.type,
           isDone: item.isDone,
+          deadline: item.deadline
         },
       })
       console.log(chalk.hex('#000').bold(`POST item:`), newItem)
@@ -196,6 +199,7 @@ app.put('/api/items/:id', async (req, res) => {
         title: updatedItem.title,
         type: updatedItem.type,
         isDone: updatedItem.isDone,
+        deadline: updatedItem.deadline,
       },
     })
     console.log(chalk.hex('#fff').bold(`PUT item:`), updatedItemData)
@@ -218,47 +222,6 @@ app.delete('/api/items/:id', async (req, res) => {
     res.status(404).json({ message: 'Элемент не найден' })
   }
 })
-
-// app.get('/api/items', (req, res) => {
-//   res.json(items)
-//   console.log(chalk.hex('#fff').bold(`GET ${items.length} items`))
-// })
-
-// app.post('/api/items', (req, res) => {
-// 	const item: Item = req.body
-// 	items.push(item)
-// 	// res.status(201).json({ message: 'Элемент успешно добавлен на сервер', item: item })
-//   console.log(chalk.hex('#000').bold(`POST item:`), item)
-// })
-
-// app.put('/api/items/:id', (req, res) => {
-//   const id = +req.params.id
-//   const updatedItem: Item = req.body
-
-//   const index = items.findIndex(item => item.id === id)
-
-//   if (index !== -1) {
-//       items[index] = { ...items[index], ...updatedItem }
-//       // res.status(200).json({ message: 'Элемент успешно обновлен', item: items[index] })
-//       console.log(chalk.hex('#fff').bold(`PUT item:`), items[index])
-//   } else {
-//       res.status(404).json({ message: 'Элемент не найден' })
-//   }
-// })
-
-// app.delete('/api/items/:id', (req, res) => {
-// 	const id: number = +req.params.id
-
-// 	const updatedItems: Item[] = items.filter(item => item.id !== id)
-
-// 	if (updatedItems.length < items.length) {
-// 		// res.status(204).json({ message: 'Элемент успешно удален с сервера', id })
-// 		items = updatedItems
-//     console.log(chalk.hex('#fff').bold(`DELETE item, id:`), id)
-// 	} else {
-// 		res.status(404).json({ error: 'Элемент с данным ID не найден' })
-// 	}
-// })
 
 app.listen(PORT, () => {
 	console.log(chalk.hex('#fff').bold(`Сервер запущен, порт: ${PORT}`))

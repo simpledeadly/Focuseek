@@ -13,13 +13,13 @@ const model = defineModel<ItemType>()
 
 const colorsForTypes = () => {
   if (model.value === 'todo') {
-    return 'background: red; color: hsl(var(--foreground))'
+    return 'background: #ff0000; color: #f0f0f0;'
   }
   if (model.value === 'note') {
-    return 'background: yellow; color: hsl(var(--background))'
+    return 'background: #ffd700; color: #0f0f0f'
   }
   if (model.value === 'project') {
-    return 'background: green; color: hsl(var(--foreground))'
+    return 'background: #1600ff; color: #f0f0f0'
   }
 }
 </script>
