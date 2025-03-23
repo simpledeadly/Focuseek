@@ -1,15 +1,20 @@
 <script setup lang="ts">
-import type { SelectRootEmits, SelectRootProps } from 'radix-vue'
-import { SelectRoot, useForwardPropsEmits } from 'radix-vue'
+import { ItemType } from '@/entities/item'
+import { capitalize } from '@/shared/lib/utils'
+import Select from 'primevue/select'
 
-const props = defineProps<SelectRootProps>()
-const emits = defineEmits<SelectRootEmits>()
+const model = defineModel()
 
-const forwarded = useForwardPropsEmits(props, emits)
+const props = defineProps<{
+  isTypeSelect?: boolean
+  options: ItemType[]
+}>()
 </script>
 
 <template>
-  <SelectRoot v-bind="forwarded">
-    <slot />
-  </SelectRoot>
+  <Select
+    v-model="model"
+    :options="props.options"
+    :option-label="(option: string) => capitalize(isTypeSelect ? option.slice(0, 1) : option)"
+  />
 </template>

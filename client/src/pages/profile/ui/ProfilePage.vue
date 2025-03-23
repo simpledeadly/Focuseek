@@ -13,32 +13,31 @@ import { UserCircle } from 'lucide-vue-next'
 import DialogClose from '@/shared/ui/dialog/DialogClose.vue'
 import { useAuth } from '@/app/useAuth'
 
+const model = defineModel<boolean>()
+
 const { getUserId } = useAuth()
 </script>
 
 <template>
   <div class="profile-page">
-    <Dialog>
-      <DialogTrigger as-child>
-        <UserCircle
-          :size="18"
-          class="app__icons_profile-icon icon"
-        />
-      </DialogTrigger>
-      <DialogContent class="sm:min-w-[90vw] sm:min-h-[90vh]">
-        <DialogHeader>
-          <DialogTitle>Profile</DialogTitle>
-          <DialogDescription>Your profile</DialogDescription>
-        </DialogHeader>
-        <div>
-          userId: <strong>{{ getUserId }}</strong>
-        </div>
-        <DialogFooter class="profile-page__footer">
-          <DialogClose as-child>
-            <Button type="button">Save changes</Button>
-          </DialogClose>
-        </DialogFooter>
-      </DialogContent>
+    <Dialog v-model="model">
+      <span class="text-surface-500 dark:text-surface-400 block mb-8"
+        >Update your information.asdfasdf</span
+      >
+      <div class="flex items-center gap-4 mb-4">
+        <label
+          for="username"
+          class="font-semibold w-24"
+          >Username</label
+        >
+      </div>
+      <div class="flex items-center gap-4 mb-8">
+        <label
+          for="email"
+          class="font-semibold w-24"
+          >Email</label
+        >
+      </div>
     </Dialog>
   </div>
 </template>

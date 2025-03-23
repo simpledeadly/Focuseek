@@ -1,13 +1,6 @@
 <script setup lang="ts">
 import type { ItemType } from '@/entities/item'
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/shared/ui/select'
+import { Select } from '@/shared/ui/select'
 
 const model = defineModel<ItemType>()
 
@@ -22,27 +15,20 @@ const colorsForTypes = () => {
     return 'background: #1600ff; color: #f0f0f0'
   }
 }
+
+// const types = [{ name: 'T' }, { name: 'N' }, { name: 'P' }]
+// const types = ['T', 'N', 'P']
+const types: ItemType[] = ['todo', 'note', 'project']
 </script>
 
 <template>
   <Select
     v-model="model"
+    :options="types"
+    :style="colorsForTypes()"
     class="type-select"
-  >
-    <SelectTrigger
-      class="w-[180px] type-select__trigger"
-      :style="colorsForTypes()"
-    >
-      <SelectValue placeholder="Type" />
-    </SelectTrigger>
-    <SelectContent class="type-select__content">
-      <SelectGroup>
-        <SelectItem value="todo">T</SelectItem>
-        <SelectItem value="note">N</SelectItem>
-        <SelectItem value="project">P</SelectItem>
-      </SelectGroup>
-    </SelectContent>
-  </Select>
+    isTypeSelect
+  />
 </template>
 
 <style lang="scss">

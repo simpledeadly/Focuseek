@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import { DialogRoot, type DialogRootEmits, type DialogRootProps, useForwardPropsEmits } from 'radix-vue'
+import Dialog from 'primevue/dialog'
 
-const props = defineProps<DialogRootProps>()
-const emits = defineEmits<DialogRootEmits>()
-
-const forwarded = useForwardPropsEmits(props, emits)
+const model = defineModel<boolean>()
 </script>
 
 <template>
-  <DialogRoot v-bind="forwarded">
+  <Dialog
+    v-model:visible="model"
+    modal
+    header="Edit Profile"
+    :style="{ width: '25rem' }"
+  >
     <slot />
-  </DialogRoot>
+  </Dialog>
 </template>

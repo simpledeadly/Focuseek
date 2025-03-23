@@ -5,7 +5,7 @@ import { AppNavbar } from '@/widgets/navbar'
 import { RouterView } from 'vue-router'
 import { Toaster } from '@/shared/ui/sonner'
 import { isAuthenticated } from './auth'
-import { ArrowRightSquare } from 'lucide-vue-next'
+import { ArrowRightSquare, Bolt, UserCircle } from 'lucide-vue-next'
 import SettingsPage from '@/pages/settings'
 import Loader from '@/widgets/loader'
 import ProfilePage from '@/pages/profile/ui/ProfilePage.vue'
@@ -16,8 +16,10 @@ const quitApp = async () => {
   window.location.reload()
 }
 
+const showModal = ref(false)
+
 const isLoading = ref(false)
-const setLoading = (value: boolean) => isLoading.value = value
+const setLoading = (value: boolean) => (isLoading.value = value)
 </script>
 
 <template>
@@ -37,9 +39,22 @@ const setLoading = (value: boolean) => isLoading.value = value
               alt="logo"
             />
           </a>
-          <div :style="{ visibility: !isAuthenticated() ? 'hidden' : 'visible' }" class="app__icons">
-            <ProfilePage />
-            <SettingsPage />
+          <div
+            :style="{ visibility: !isAuthenticated() ? 'hidden' : 'visible' }"
+            class="app__icons"
+          >
+            <UserCircle
+              @click="showModal = true"
+              :size="18"
+              class="app__icons_profile-icon icon"
+            />
+            <ProfilePage v-model="showModal" />
+            <Bolt
+              @click="showModal = true"
+              :size="18"
+              class="app__bolt-icon icon"
+            />
+            <SettingsPage v-model="showModal" />
             <ArrowRightSquare
               :size="18"
               class="app__icons_quit-icon icon"
@@ -48,11 +63,17 @@ const setLoading = (value: boolean) => isLoading.value = value
           </div>
         </div>
       </template>
-      <template v-if="isAuthenticated()" #nav>
+      <template
+        v-if="isAuthenticated()"
+        #nav
+      >
         <AppNavbar />
       </template>
       <template #main>
-        <RouterView @loading="(value: boolean) => setLoading(value)" class="app__main" />
+        <RouterView
+          @loading="(value: boolean) => setLoading(value)"
+          class="app__main"
+        />
       </template>
     </MainLayout>
   </div>

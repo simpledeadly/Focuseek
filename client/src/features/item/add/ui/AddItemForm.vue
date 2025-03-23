@@ -54,7 +54,6 @@ const { filteredItems } = useFilterItems(items)
             <TooltipTrigger as-child>
               <Button
                 type="button"
-                variant="secondary"
                 class="add-item-form__input-button"
                 @click="handleSubmit"
               >

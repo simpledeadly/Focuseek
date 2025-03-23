@@ -1,53 +1,19 @@
 <script setup lang="ts">
 import type { ItemType } from '@/entities/item'
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  // SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@/shared/ui/select'
+import { Select } from '@/shared/ui/select'
 
 const model = defineModel<ItemType>()
+
+// const types = [{ name: 'todo' }, { name: 'note' }, { name: 'project' }]
+const types: ItemType[] = ['todo', 'note', 'project']
 </script>
 
 <template>
   <Select
     v-model="model"
+    :options="types"
     class="item-type-select"
-  >
-    <SelectTrigger
-      arrow
-      class="w-[180px] item-type-select__content"
-    >
-      <SelectValue placeholder="Type" />
-    </SelectTrigger>
-    <SelectContent>
-      <SelectGroup>
-        <!-- <SelectLabel> Types </SelectLabel> -->
-        <SelectItem
-          value="todo"
-          class="item-type-select__item"
-        >
-          Todo
-        </SelectItem>
-        <SelectItem
-          value="note"
-          class="item-type-select__item"
-        >
-          Note
-        </SelectItem>
-        <SelectItem
-          value="project"
-          class="item-type-select__item"
-        >
-          Project
-        </SelectItem>
-      </SelectGroup>
-    </SelectContent>
-  </Select>
+  />
 </template>
 
 <style lang="scss">

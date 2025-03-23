@@ -1,34 +1,55 @@
 <script setup lang="ts">
-import { Tabs, TabsList, TabsTrigger } from '@/shared/ui/tabs'
+import { ref } from 'vue'
+import Menubar from 'primevue/menubar'
 // import { useItemType } from '@/features/item/filter'
 // const { itemType } = useItemType()
 // console.log(itemType.value)
+
+// const options: any = ['Todos', 'Notes', 'Projects']
+
+const items: any = ref([
+  {
+    label: 'Todos',
+    path: '/'
+  },
+  {
+    label: 'Notes',
+    path: '/?type=note'
+  },
+  {
+    label: 'Projects',
+    path: '/?type=project'
+  },
+])
 </script>
 
 <template>
   <nav class="app-navbar">
-    <Tabs
-      default-value="todo"
-      class="w-[400px] app-navbar__container"
+    <Menubar
+      :model="items"
+      class="app-navbar__container"
     >
-      <TabsList>
-        <RouterLink to="/">
-          <TabsTrigger value="todo">Todos</TabsTrigger>
+      <template #item="{ item, props }">
+        <RouterLink :to="item.path">
+          <a
+            v-ripple
+            class="flex items-center"
+            v-bind="props.action"
+          >
+            <span>{{ item.label }}</span>
+          </a>
         </RouterLink>
-        <RouterLink to="/?type=note">
-          <TabsTrigger value="note">Notes</TabsTrigger>
-        </RouterLink>
-        <!-- <RouterLink to="/?type=project">
-          <TabsTrigger value="project">Projects</TabsTrigger>
-        </RouterLink> -->
-      </TabsList>
-    </Tabs>
+      </template>
+    </Menubar>
   </nav>
 </template>
 
 <style lang="scss">
 .app-navbar {
   &__container {
+    width: 30rem;
+    display: flex;
+    justify-content: center;
     margin: 0 auto;
     margin-top: 0.25rem;
     margin-bottom: 1.5rem;
