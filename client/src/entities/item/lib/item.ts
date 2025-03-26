@@ -34,9 +34,23 @@ export const replaceItemInList = (itemList: Item[], newItem: Item): Item[] => {
 }
 
 export const filterItemsByType = (itemList: Item[], type: ItemType): Item[] => {
-  return itemList.filter((item) => item.type === type).sort((a, b) => a.id - b.id)
+  return itemList
+    .filter((item) => item.type === type)
+    .sort((a, b) => {
+      const aDeadline = a.deadline ? new Date(a.deadline).getTime() : Infinity
+      const bDeadline = b.deadline ? new Date(b.deadline).getTime() : Infinity
+
+      return aDeadline - bDeadline
+    })
 }
 
 export const filterDoneItems = (itemList: Item[]): Item[] => {
-  return itemList.filter((item) => !item.isDone).sort((a, b) => a.id - b.id)
+  return itemList
+    .filter((item) => !item.isDone)
+    .sort((a, b) => {
+      const aDeadline = a.deadline ? new Date(a.deadline).getTime() : Infinity
+      const bDeadline = b.deadline ? new Date(b.deadline).getTime() : Infinity
+      
+      return aDeadline - bDeadline
+    })
 }

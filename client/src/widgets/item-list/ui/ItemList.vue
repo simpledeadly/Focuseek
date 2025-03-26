@@ -11,6 +11,19 @@ import { ItemRemoveButton, useRemoveItem } from '@/features/item/remove'
 import { ProjectDrawer } from '@/widgets/projects-drawer'
 import { StickyNote } from 'lucide-vue-next'
 
+import {
+  Pagination,
+  PaginationEllipsis,
+  PaginationFirst,
+  PaginationLast,
+  PaginationList,
+  PaginationListItem,
+  PaginationNext,
+  PaginationPrev,
+} from '@/shared/ui/pagination'
+import { Button } from '@/shared/ui/button'
+import { computed, ref } from 'vue'
+
 const { items } = useItems()
 const { itemType, filteredItems } = useFilterItems(items)
 const { addItem } = useAddItem(items)
@@ -19,6 +32,23 @@ const { toggleDoneItem } = useDoneItem(items)
 const { changeItemTitle } = useChangeItemTitle(items)
 const { changeItemDeadline } = useChangeItemDeadline(items)
 const { changeItemType } = useChangeItemType(items)
+
+const itemsPerPage = 10
+const currentPage = ref(1)
+
+const paginatedItems = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage
+  const end = start + itemsPerPage
+  return filteredItems.value.slice(start, end)
+})
+
+const totalPages = computed(() => Math.ceil(filteredItems.value.length / itemsPerPage))
+
+const goToPage = (page: number) => {
+  if (page >= 1 && page <= totalPages.value) {
+    currentPage.value = page
+  }
+}
 </script>
 
 <template>
@@ -30,13 +60,14 @@ const { changeItemType } = useChangeItemType(items)
       <ItemTypeSelect v-model="itemType" />
     </template>
   </AddItemForm>
+
   <div
-    v-if="filteredItems.length > 0"
+    v-if="paginatedItems.length > 0"
     class="item-list"
   >
     <TransitionGroup name="fade">
       <ItemEntity
-        v-for="item in filteredItems"
+        v-for="item in paginatedItems"
         :key="item.id"
         :type="item.type"
       >
@@ -136,6 +167,48 @@ const { changeItemType } = useChangeItemType(items)
     <StickyNote :size="40" />
     <strong class="empty__message">No {{ itemType }}s</strong>
   </div>
+
+  <Pagination
+    :items-per-page="itemsPerPage"
+    :total="filteredItems.length"
+    :sibling-count="1"
+    show-edges
+    :default-page="currentPage"
+    @update:page="goToPage"
+  >
+    <PaginationList
+      v-slot="{ items }"
+      class="flex items-center gap-1"
+    >
+      <PaginationFirst @click="goToPage(1)" />
+      <PaginationPrev @click="goToPage(currentPage - 1)" />
+
+      <template v-for="(item, index) in items">
+        <PaginationListItem
+          v-if="item.type === 'page'"
+          :key="index"
+          :value="item.value"
+          as-child
+        >
+          <Button
+            class="w-10 h-10 p-0"
+            :variant="item.value === currentPage ? 'default' : 'outline'"
+            @click="goToPage(item.value)"
+          >
+            {{ item.value }}
+          </Button>
+        </PaginationListItem>
+        <PaginationEllipsis
+          v-else
+          :key="item.type"
+          :index="index"
+        />
+      </template>
+
+      <PaginationNext @click="goToPage(currentPage + 1)" />
+      <PaginationLast @click="goToPage(totalPages)" />
+    </PaginationList>
+  </Pagination>
 </template>
 
 <style lang="scss">
@@ -172,5 +245,9 @@ const { changeItemType } = useChangeItemType(items)
 
 .fade-leave-active {
   position: absolute;
+}
+
+.dragging {
+  opacity: 0.5;
 }
 </style>

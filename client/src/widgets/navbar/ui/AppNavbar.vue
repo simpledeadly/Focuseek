@@ -11,7 +11,7 @@ import { Tabs, TabsList, TabsTrigger } from '@/shared/ui/tabs'
       default-value="todo"
       class="w-[400px] app-navbar__container"
     >
-      <TabsList>
+      <TabsList class="app-navbar__tabs">
         <RouterLink to="/">
           <TabsTrigger value="todo">Todos</TabsTrigger>
         </RouterLink>
@@ -33,6 +33,11 @@ import { Tabs, TabsList, TabsTrigger } from '@/shared/ui/tabs'
     margin-top: 0.25rem;
     margin-bottom: 1.5rem;
     text-align: center;
+  }
+
+  &__tabs {
+    border: 1px solid hsl(var(--border));
+    background: hsl(var(--primary-foreground)) !important;
   }
 }
 </style>

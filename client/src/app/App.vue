@@ -7,8 +7,8 @@ import { Toaster } from '@/shared/ui/sonner'
 import { isAuthenticated } from './auth'
 import { ArrowRightSquare } from 'lucide-vue-next'
 import SettingsPage from '@/pages/settings'
+import ProfilePage from '@/pages/profile'
 import Loader from '@/widgets/loader'
-import ProfilePage from '@/pages/profile/ui/ProfilePage.vue'
 
 const quitApp = async () => {
   localStorage.removeItem('token')
@@ -26,7 +26,7 @@ const setLoading = (value: boolean) => isLoading.value = value
   <div class="app">
     <MainLayout>
       <template #logo>
-        <div class="app__logo-and-system-settings">
+        <div class="app__links">
           <a
             href="https://github.com/simpledeadly/Focuseek"
             target="_blank"
@@ -66,12 +66,12 @@ const setLoading = (value: boolean) => isLoading.value = value
     width: 88px;
     margin: 0 auto;
     margin-left: 4.5rem;
-
-    &-and-system-settings {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+  }
+  
+  &__links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   &__icons {
