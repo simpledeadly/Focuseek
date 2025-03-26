@@ -12,6 +12,7 @@ import { Button } from '@/shared/ui/button'
 import { UserCircle } from 'lucide-vue-next'
 import DialogClose from '@/shared/ui/dialog/DialogClose.vue'
 import { useAuth } from '@/app/useAuth'
+import { DropdownMenuItem } from '@/shared/ui/dropdown-menu'
 
 const { getUserId } = useAuth()
 </script>
@@ -24,6 +25,9 @@ const { getUserId } = useAuth()
           :size="18"
           class="app__icons_profile-icon icon"
         />
+        <!-- <DropdownMenuItem>
+          <span>Profile</span>
+        </DropdownMenuItem> -->
       </DialogTrigger>
       <DialogContent class="sm:min-w-[90vw] sm:min-h-[90vh]">
         <DialogHeader>

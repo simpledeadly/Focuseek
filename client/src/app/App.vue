@@ -9,65 +9,77 @@ import { ArrowRightSquare } from 'lucide-vue-next'
 import SettingsPage from '@/pages/settings'
 import ProfilePage from '@/pages/profile'
 import Loader from '@/widgets/loader'
-
-const quitApp = async () => {
-  localStorage.removeItem('token')
-  localStorage.removeItem('auth')
-  window.location.reload()
-}
+import { SidebarProvider, SidebarTrigger } from '@/shared/ui/sidebar'
+import { AppSidebar } from '@/widgets/sidebar'
 
 const isLoading = ref(false)
-const setLoading = (value: boolean) => isLoading.value = value
+const setLoading = (value: boolean) => (isLoading.value = value)
 </script>
 
 <template>
-  <Toaster />
-  <Loader v-if="isLoading" />
-  <div class="app">
-    <MainLayout>
-      <template #logo>
-        <div class="app__links">
-          <a
-            href="https://github.com/simpledeadly/Focuseek"
-            target="_blank"
-          >
-            <img
-              src="@/assets/logo_dark.png"
-              class="app__logo"
-              alt="logo"
-            />
-          </a>
-          <div :style="{ visibility: !isAuthenticated() ? 'hidden' : 'visible' }" class="app__icons">
-            <ProfilePage />
-            <SettingsPage />
-            <ArrowRightSquare
-              :size="18"
-              class="app__icons_quit-icon icon"
-              @click="quitApp"
-            />
+  <SidebarProvider>
+    <AppSidebar />
+    <Loader v-if="isLoading" />
+    <Toaster />
+    <SidebarTrigger />
+    <div class="app">
+      <MainLayout>
+        <ProfilePage />
+        <SettingsPage />
+        <!-- <template #logo>
+          <div class="app__links">
+            <a
+              href="https://github.com/simpledeadly/Focuseek"
+              target="_blank"
+            >
+              <img
+                src="@/assets/logo_dark.png"
+                class="app__logo"
+                alt="logo"
+              />
+            </a>
+            <div
+              :style="{ visibility: !isAuthenticated() ? 'hidden' : 'visible' }"
+              class="app__icons"
+            >
+              <ProfilePage />
+              <SettingsPage />
+              <ArrowRightSquare
+                :size="18"
+                class="app__icons_quit-icon icon"
+              />
+            </div>
           </div>
-        </div>
-      </template>
-      <template v-if="isAuthenticated()" #nav>
-        <AppNavbar />
-      </template>
-      <template #main>
-        <RouterView @loading="(value: boolean) => setLoading(value)" class="app__main" />
-      </template>
-    </MainLayout>
-  </div>
+        </template> -->
+        <template
+          v-if="isAuthenticated()"
+          #nav 
+        >
+
+          <AppNavbar />
+        </template>
+        <template #main>
+          <RouterView
+            @loading="(value: boolean) => setLoading(value)"
+            class="app__main"
+          />
+        </template>
+      </MainLayout>
+    </div>
+  </SidebarProvider>
 </template>
 
 <style lang="scss">
 .app {
+  width: 100%;
   padding-top: 1rem;
 
   &__logo {
     width: 88px;
     margin: 0 auto;
-    margin-left: 4.5rem;
+    margin-left: 3rem;
   }
-  
+
   &__links {
     display: flex;
     align-items: center;

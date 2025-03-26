@@ -13,14 +13,26 @@ const { toggleSidebar } = useSidebar()
 </script>
 
 <template>
-  <Button
+  <PanelLeft
     data-sidebar="trigger"
     variant="ghost"
-    size="icon"
-    :class="cn('h-7 w-7', props.class)"
     @click="toggleSidebar"
-  >
-    <PanelLeft />
-    <span class="sr-only">Toggle Sidebar</span>
-  </Button>
+    class="icon"
+  />
 </template>
+
+<style lang="scss" scoped>
+.icon {
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+  transition: 0.05s;
+  color: hsl(var(--muted-foreground));
+  cursor: pointer;
+  opacity: 0.5;
+
+  &:hover {
+    color: hsl(var(--foreground));
+    opacity: 1;
+  }
+}
+</style>

@@ -37,6 +37,9 @@ const switchMode = (theme: any) => (mode.value = theme)
           :size="18"
           class="app__bolt-icon icon"
         />
+        <!-- <DropdownMenuItem>
+          <span>Settings</span>
+        </DropdownMenuItem> -->
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -82,7 +85,11 @@ const switchMode = (theme: any) => (mode.value = theme)
         </div>
         <DialogFooter class="settings-page__footer">
           <DialogClose as-child>
-            <Button type="button" @click="handleReload">Save changes</Button>
+            <Button
+              type="button"
+              @click="handleReload"
+              >Save changes</Button
+            >
           </DialogClose>
         </DialogFooter>
       </DialogContent>

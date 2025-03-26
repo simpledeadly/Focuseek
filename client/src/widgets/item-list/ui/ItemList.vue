@@ -213,8 +213,10 @@ const goToPage = (page: number) => {
 
 <style lang="scss">
 .item-list {
-  min-width: 350px;
-  max-width: 60% or 1024px;
+  // min-width: 350px;
+  // max-width: 60% or 1024px;
+  // width: calc(100vw - 20rem);
+  width: 70vw;
   margin-bottom: 5rem;
 }
 
