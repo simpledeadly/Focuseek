@@ -1,12 +1,27 @@
 import type { Item, ItemType } from '../types/item'
 
 export const isItemType = (value: unknown): value is ItemType => {
-  const types: unknown[] = ['todo', 'note', 'project']
+  const types: unknown[] = ['todo', 'note']
   return types.includes(value)
 }
 
-export const createItem = (userId: number, title: string, type: ItemType): Item => {
-  return { id: Date.now(), userId, type, title }
+export const createItem = (
+  userId: number,
+  collectionId: number,
+  title: string,
+  type: ItemType,
+  parentItemId?: number
+): Item => {
+  return {
+    id: Date.now(),
+    userId,
+    collectionId,
+    title,
+    type,
+    createdAt: Date.now(),
+    editedAt: Date.now(),
+    parentItemId,
+  }
 }
 
 export const updateItem = (item: Item, changes: Partial<Item>): Item => {
@@ -33,6 +48,14 @@ export const replaceItemInList = (itemList: Item[], newItem: Item): Item[] => {
   return itemList
 }
 
+export const filterItemsByCollection = (itemList: Item[], collectionId: number): Item[] => {
+  return itemList.filter((item) => item.collectionId === collectionId)
+}
+
+export const filterDoneItems = (itemList: Item[]): Item[] => {
+  return itemList.filter((item) => !item.isDone)
+}
+
 export const filterItemsByType = (itemList: Item[], type: ItemType): Item[] => {
   return itemList
     .filter((item) => item.type === type)
@@ -40,17 +63,6 @@ export const filterItemsByType = (itemList: Item[], type: ItemType): Item[] => {
       const aDeadline = a.deadline ? new Date(a.deadline).getTime() : Infinity
       const bDeadline = b.deadline ? new Date(b.deadline).getTime() : Infinity
 
-      return aDeadline - bDeadline
-    })
-}
-
-export const filterDoneItems = (itemList: Item[]): Item[] => {
-  return itemList
-    .filter((item) => !item.isDone)
-    .sort((a, b) => {
-      const aDeadline = a.deadline ? new Date(a.deadline).getTime() : Infinity
-      const bDeadline = b.deadline ? new Date(b.deadline).getTime() : Infinity
-      
       return aDeadline - bDeadline
     })
 }

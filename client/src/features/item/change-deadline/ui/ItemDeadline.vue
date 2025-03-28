@@ -79,7 +79,10 @@ const handleSave = () => {
 const handleBadgeVariant = () => {
   if (!props.deadline) {
     return 'outline'
-  } else if (parseInt(deadlineText.value.replace(/\D+/g, '')) <= 960 && !deadlineText.value.includes('Expired')) {
+  } else if (
+    parseInt(deadlineText.value.replace(/\D+/g, '')) <= 960 &&
+    !deadlineText.value.includes('Expired')
+  ) {
     return 'destructive'
   } else {
     return 'secondary'
@@ -99,7 +102,7 @@ const handleBadgeVariant = () => {
       </Badge>
     </PopoverTrigger>
     <PopoverContent class="w-auto p-2 space-y-2">
-      <Input 
+      <Input
         v-model="dateInput"
         placeholder="YYYY-M-DD HH:mm"
       />

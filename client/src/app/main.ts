@@ -1,9 +1,9 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import { router } from './router'
-import persist from 'pinia-plugin-persistedstate'
 import App from './App.vue'
-import './styles.scss'
+import { router } from './router/router'
+import persist from 'pinia-plugin-persistedstate'
+import './styles/styles.scss'
 
 const pinia = createPinia()
 pinia.use(persist)

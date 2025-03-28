@@ -1,7 +1,6 @@
-import { type Item } from '@/entities/item'
-import { removeItemFromListById } from '@/entities/item/lib/item'
-import { deleteItemFromServer } from '@/shared/api/api'
 import { ShallowRef } from 'vue'
+import { removeItemFromListById, type Item } from '@/entities/item'
+import { deleteItemFromServer } from '@/shared/api/api'
 
 export const useRemoveItem = (items: ShallowRef<Item[]>) => {
   const removeItem = (item: Item) => {

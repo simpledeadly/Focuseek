@@ -14,26 +14,44 @@ model User {
 
   @@map(name: "users")
   Item Item[]
+  Collection Collection[]
 }
 
 enum ItemType {
   todo
   note
-  project
+}
+
+model Collection {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  title      String
+  createdAt  DateTime @default(now()) @map("created_at")
+  editedAt   DateTime @updatedAt @map("edited_at")
+  user       User     @relation(fields: [userId], references: [id])
+  items      Item[]
+  
+  @@map(name: "collections")
 }
 
 model Item {
-  id       Int     @id @default(autoincrement())
-  title    String
-  type     ItemType
-  isDone   Boolean?
-  deadline   String?
-  userId   Int
-  user     User    @relation(fields: [userId], references: [id])
-
-  subtodos SubItem[] @relation("ItemToSubItem") // Добавьте имя отношения
-
+  id           Int       @id @default(autoincrement())
+  userId       Int
+  collectionId Int
+  parentItemId Int?
+  title        String
+  type         ItemType
+  isDone       Boolean?
+  deadline     String?
+  createdAt    DateTime  @default(now()) @map("created_at")
+  editedAt     DateTime  @updatedAt @map("edited_at")
+  user         User      @relation(fields: [userId], references: [id])
+  collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  parent       Item?     @relation("ItemToParent", fields: [parentItemId], references: [id])
+  subtodos     Item[]    @relation("ItemToParent")
+  
   @@map(name: "items")
+  SubItem SubItem[] @relation(name: "ItemToSubItem")
 }
 
 model SubItem {

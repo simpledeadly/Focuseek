@@ -6,7 +6,7 @@ export const useAuth = defineStore('auth', {
     userId: null as number | null,
   }),
   getters: {
-    getUserId: (state) => state.userId
+    getUserId: (state) => state.userId,
   },
   actions: {
     setUserId(id: number) {

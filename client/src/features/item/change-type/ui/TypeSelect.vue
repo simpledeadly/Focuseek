@@ -39,7 +39,6 @@ const colorsForTypes = () => {
       <SelectGroup>
         <SelectItem value="todo">T</SelectItem>
         <SelectItem value="note">N</SelectItem>
-        <SelectItem value="project">P</SelectItem>
       </SelectGroup>
     </SelectContent>
   </Select>

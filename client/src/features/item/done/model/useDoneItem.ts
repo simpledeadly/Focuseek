@@ -1,7 +1,6 @@
-import { updateItem, type Item } from '@/entities/item'
-import { replaceItemInList } from '@/entities/item/lib/item'
-import { updateItemOnServer } from '@/shared/api/api'
 import { ShallowRef } from 'vue'
+import { updateItem, replaceItemInList, type Item } from '@/entities/item'
+import { updateItemOnServer } from '@/shared/api/api'
 
 export const useDoneItem = (items: ShallowRef<Item[]>) => {
   const toggleDoneItem = async (item: Item) => {

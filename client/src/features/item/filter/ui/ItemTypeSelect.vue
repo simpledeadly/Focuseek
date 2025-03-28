@@ -39,12 +39,6 @@ const model = defineModel<ItemType>()
         >
           Note
         </SelectItem>
-        <SelectItem
-          value="project"
-          class="item-type-select__item"
-        >
-          Project
-        </SelectItem>
       </SelectGroup>
     </SelectContent>
   </Select>

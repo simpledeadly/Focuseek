@@ -41,7 +41,7 @@ const cancelChanges = () => {
       <div :class="props.isDone ? 'item-title__label_done' : 'item-title__label'">
         {{ props.title }}
       </div>
-      <TooltipProvider>
+      <TooltipProvider :delay-duration="0">
         <Tooltip>
           <TooltipTrigger as-child>
             <button
@@ -105,9 +105,9 @@ const cancelChanges = () => {
   }
 
   &__save-button {
-    color: hsl(var(--muted-foreground));
     // color: #00b749;
     margin-right: calc(var(--radius) - 2px);
+    color: hsl(var(--muted-foreground));
     transition: all 0.05s;
 
     &:hover {

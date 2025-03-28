@@ -16,8 +16,8 @@ const { toggleSidebar } = useSidebar()
   <PanelLeft
     data-sidebar="trigger"
     variant="ghost"
-    @click="toggleSidebar"
     class="icon"
+    @click="toggleSidebar"
   />
 </template>
 
@@ -25,10 +25,10 @@ const { toggleSidebar } = useSidebar()
 .icon {
   margin-top: 0.5rem;
   margin-left: 0.5rem;
-  transition: 0.05s;
   color: hsl(var(--muted-foreground));
   cursor: pointer;
   opacity: 0.5;
+  transition: 0.05s;
 
   &:hover {
     color: hsl(var(--foreground));

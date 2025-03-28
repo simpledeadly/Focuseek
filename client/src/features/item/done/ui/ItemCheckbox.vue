@@ -6,7 +6,7 @@ const model = defineModel<boolean>()
 </script>
 
 <template>
-  <TooltipProvider>
+  <TooltipProvider :delay-duration="0">
     <Tooltip>
       <TooltipTrigger as-child>
         <Checkbox

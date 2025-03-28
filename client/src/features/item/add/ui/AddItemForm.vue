@@ -6,7 +6,6 @@ import { Separator } from '@/shared/ui/separator'
 import { useFilterItems, useItemType } from '@/features/item/filter'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/shared/ui/tooltip'
 import { useItems } from '@/entities/item'
-// import { CirclePlus } from 'lucide-vue-next'
 
 const emit = defineEmits<{
   (e: 'submit', value: string): void
@@ -49,7 +48,7 @@ const { filteredItems } = useFilterItems(items)
           v-if="slots.select"
           name="select"
         />
-        <TooltipProvider>
+        <TooltipProvider :delay-duration="0">
           <Tooltip>
             <TooltipTrigger as-child>
               <Button
@@ -69,8 +68,14 @@ const { filteredItems } = useFilterItems(items)
         </TooltipProvider>
       </form>
     </div>
-    <!-- <Separator :label="capitalizeAndAppendS(itemType)" />/ -->
-    <Separator :label="filteredItems.length === 0 ? 'No ' + itemType + 's' : filteredItems.length + ' ' + itemType + 's'" />
+
+    <Separator
+      :label="
+        filteredItems.length === 0
+          ? 'No ' + itemType + 's'
+          : filteredItems.length + ' ' + itemType + 's'
+      "
+    />
   </div>
 </template>
 
@@ -82,6 +87,7 @@ const { filteredItems } = useFilterItems(items)
 .add-item-form {
   display: flex;
   margin: 0 auto;
+  margin-top: 1rem;
   margin-bottom: 1.5rem;
 
   &__input {

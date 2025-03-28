@@ -1,13 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { MainLayout } from '@/shared/ui/layouts/main-layout'
-import { AppNavbar } from '@/widgets/navbar'
 import { RouterView } from 'vue-router'
 import { Toaster } from '@/shared/ui/sonner'
-import { isAuthenticated } from './auth'
-import { ArrowRightSquare } from 'lucide-vue-next'
-import SettingsPage from '@/pages/settings'
-import ProfilePage from '@/pages/profile'
 import Loader from '@/widgets/loader'
 import { SidebarProvider, SidebarTrigger } from '@/shared/ui/sidebar'
 import { AppSidebar } from '@/widgets/sidebar'
@@ -24,8 +19,6 @@ const setLoading = (value: boolean) => (isLoading.value = value)
     <SidebarTrigger />
     <div class="app">
       <MainLayout>
-        <ProfilePage />
-        <SettingsPage />
         <!-- <template #logo>
           <div class="app__links">
             <a
@@ -33,35 +26,17 @@ const setLoading = (value: boolean) => (isLoading.value = value)
               target="_blank"
             >
               <img
-                src="@/assets/logo_dark.png"
+                src="@/shared/assets/logo_dark.png"
                 class="app__logo"
                 alt="logo"
               />
             </a>
-            <div
-              :style="{ visibility: !isAuthenticated() ? 'hidden' : 'visible' }"
-              class="app__icons"
-            >
-              <ProfilePage />
-              <SettingsPage />
-              <ArrowRightSquare
-                :size="18"
-                class="app__icons_quit-icon icon"
-              />
-            </div>
           </div>
         </template> -->
-        <template
-          v-if="isAuthenticated()"
-          #nav 
-        >
-
-          <AppNavbar />
-        </template>
         <template #main>
           <RouterView
-            @loading="(value: boolean) => setLoading(value)"
             class="app__main"
+            @loading="(value: boolean) => setLoading(value)"
           />
         </template>
       </MainLayout>
@@ -77,7 +52,6 @@ const setLoading = (value: boolean) => (isLoading.value = value)
   &__logo {
     width: 88px;
     margin: 0 auto;
-    margin-left: 3rem;
   }
 
   &__links {
@@ -91,11 +65,11 @@ const setLoading = (value: boolean) => (isLoading.value = value)
   }
 
   .icon {
-    transition: 0.05s;
     margin-left: 0.5rem;
     color: hsl(var(--muted-foreground));
     cursor: pointer;
     opacity: 0.5;
+    transition: 0.05s;
 
     &:hover {
       color: hsl(var(--foreground));

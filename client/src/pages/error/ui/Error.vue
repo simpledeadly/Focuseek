@@ -1,22 +1,24 @@
 <template>
   <div class="loader-overlay">
-    <h1 style="font-size: 60px;"><strong>УПС! Ошибочка вышла!</strong></h1>
+    <h1 style="font-size: 60px"><strong>УПС! Ошибочка вышла!</strong></h1>
   </div>
 </template>
 
 <style lang="scss" scoped>
 * {
-  transition: all 0.2s, opacity 0.02s;
+  transition:
+    all 0.2s,
+    opacity 0.02s;
 }
 
 .loader-overlay {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: fixed;
-  z-index: 2;
   top: 0;
   left: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
   background: #f15f79;
@@ -33,24 +35,24 @@
   position: absolute;
   width: 100px;
   height: 100px;
-  border-radius: 100%;
   background: #fff;
+  border-radius: 100%;
   animation: loader 1.5s linear infinite;
 }
 
 .loader span:last-child {
-  animation-delay: -0.9s;
   -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
 }
 
 @keyframes loader {
   from {
-    transform: scale(0, 0);
     opacity: 0.8;
+    transform: scale(0, 0);
   }
   to {
-    transform: scale(1, 1);
     opacity: 0;
+    transform: scale(1, 1);
   }
 }
 
@@ -97,7 +99,6 @@
 //   &__loader {
 //     width: 100px;
 //     height: 100px;
-
 
 //   }
 

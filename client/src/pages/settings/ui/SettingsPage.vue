@@ -17,6 +17,7 @@ import { Card, CardContent } from '@/shared/ui/card'
 import { Switch } from '@/shared/ui/switch'
 import { Label } from '@/shared/ui/label'
 import { ref, watch } from 'vue'
+import { HideToggle } from '@/widgets/hide-toggle'
 
 const isHideDone = ref(JSON.parse(localStorage.getItem('hide')!) || false)
 
@@ -75,13 +76,7 @@ const switchMode = (theme: any) => (mode.value = theme)
             <!-- <CarouselPrevious />
             <CarouselNext /> -->
           </Carousel>
-          <div class="flex items-center space-x-2">
-            <Switch
-              id="hide-done"
-              v-model="isHideDone"
-            />
-            <Label for="hide-done">Hide done</Label>
-          </div>
+         <HideToggle v-model="isHideDone" />
         </div>
         <DialogFooter class="settings-page__footer">
           <DialogClose as-child>

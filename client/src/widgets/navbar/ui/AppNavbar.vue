@@ -12,15 +12,12 @@ import { Tabs, TabsList, TabsTrigger } from '@/shared/ui/tabs'
       class="w-[400px] app-navbar__container"
     >
       <TabsList class="app-navbar__tabs">
-        <RouterLink to="/">
+        <RouterLink to="/collections">
           <TabsTrigger value="todo">Todos</TabsTrigger>
         </RouterLink>
-        <RouterLink to="/?type=note">
+        <RouterLink to="/collections">
           <TabsTrigger value="note">Notes</TabsTrigger>
         </RouterLink>
-        <!-- <RouterLink to="/?type=project">
-          <TabsTrigger value="project">Projects</TabsTrigger>
-        </RouterLink> -->
       </TabsList>
     </Tabs>
   </nav>
@@ -36,8 +33,8 @@ import { Tabs, TabsList, TabsTrigger } from '@/shared/ui/tabs'
   }
 
   &__tabs {
-    border: 1px solid hsl(var(--border));
     background: hsl(var(--primary-foreground)) !important;
+    border: 1px solid hsl(var(--border));
   }
 }
 </style>

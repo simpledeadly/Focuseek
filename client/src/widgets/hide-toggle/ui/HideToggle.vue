@@ -1,15 +1,16 @@
 <script setup lang="ts">
+import { Switch } from '@/shared/ui/switch'
+
 const model = defineModel<boolean>()
 </script>
 
 <template>
-  <div>
-    <input
+  <div class="hide-toggle flex items-center space-x-2">
+    <Switch
+      id="hide-done"
       v-model="model"
-      type="checkbox"
-      class="hide-toggle"
     />
-    <label>Hide checked</label>
+    <Label for="hide-done">Hide done</Label>
   </div>
 </template>
 

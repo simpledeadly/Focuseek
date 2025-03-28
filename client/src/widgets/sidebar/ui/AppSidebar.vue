@@ -1,16 +1,5 @@
 <script setup lang="ts">
-import {
-  Calendar,
-  ChevronDown,
-  ChevronUp,
-  CirclePlus,
-  Home,
-  Inbox,
-  Plus,
-  Search,
-  Settings,
-  User2,
-} from 'lucide-vue-next'
+import { ChevronDown, User2 } from 'lucide-vue-next'
 import {
   Sidebar,
   SidebarContent,
@@ -20,12 +9,8 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuAction,
-  SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubItem,
 } from '@/shared/ui/sidebar'
 import { CollapsibleContent, CollapsibleRoot, CollapsibleTrigger } from 'reka-ui'
 import {
@@ -35,84 +20,10 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/ui/dropdown-menu'
 import SettingsPage from '@/pages/settings'
-import ProfilePage from '@/pages/profile'
-import { Input } from '@/shared/ui/input'
 
-// const items = [
-//   {
-//     id: 1,
-//     title: 'Home',
-//     url: '#',
-//     icon: Home,
-//     badge: 15,
-//   },
-//   {
-//     id: 2,
-//     title: 'Inbox',
-//     url: '#',
-//     icon: Inbox,
-//     badge: 2,
-//   },
-//   {
-//     id: 3,
-//     title: 'Calendar',
-//     url: '#',
-//     icon: Calendar,
-//     badge: 8,
-//   },
-//   {
-//     id: 4,
-//     title: 'Search',
-//     url: '#',
-//     icon: Search,
-//     badge: 19,
-//   },
-//   {
-//     id: 5,
-//     title: 'Settings',
-//     url: '#',
-//     icon: Settings,
-//     badge: 24,
-//   },
-// ]
+// import { useCollections } from '@/entities/collection'
 
-// const subItems = [
-//   {
-//     id: 11,
-//     title: 'asdfa',
-//     url: '#',
-//     icon: Home,
-//     badge: 15,
-//   },
-//   {
-//     id: 12,
-//     title: 'asdfasdfads',
-//     url: '#',
-//     icon: Inbox,
-//     badge: 2,
-//   },
-//   {
-//     id: 13,
-//     title: 'wrwer',
-//     url: '#',
-//     icon: Calendar,
-//     badge: 8,
-//   },
-//   {
-//     id: 14,
-//     title: 'werwer234',
-//     url: '#',
-//     icon: Search,
-//     badge: 19,
-//   },
-//   {
-//     id: 15,
-//     title: 'asdfadsf',
-//     url: '#',
-//     icon: Settings,
-//     badge: 24,
-//   },
-// ]
+// const { collections } = useCollections()
 
 const quitApp = async () => {
   localStorage.removeItem('token')
@@ -127,7 +38,7 @@ const quitApp = async () => {
       <SidebarMenu>
         <SidebarMenuItem>
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+            <DropdownMenuTrigger as-child>
               <SidebarMenuButton>
                 <User2 /> simpledeadly
                 <ChevronDown class="ml-auto" />
@@ -140,12 +51,16 @@ const quitApp = async () => {
               <DropdownMenuItem>
                 <span>Account</span>
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <span>Profile</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <span>Settings</span>
-              </DropdownMenuItem>
+              <RouterLink to="/account">
+                <DropdownMenuItem>
+                  <span>Profile</span>
+                </DropdownMenuItem>
+              </RouterLink>
+              <RouterLink to="/settings">
+                <DropdownMenuItem>
+                  <span>Settings</span>
+                </DropdownMenuItem>
+              </RouterLink>
               <DropdownMenuItem @click="quitApp">
                 <span>Sign out</span>
               </DropdownMenuItem>
@@ -154,8 +69,9 @@ const quitApp = async () => {
         </SidebarMenuItem>
       </SidebarMenu>
     </SidebarHeader>
+
     <SidebarContent>
-      <SidebarGroup>
+      <!-- <SidebarGroup>
         <SidebarGroupLabel>Фичи</SidebarGroupLabel>
         <SidebarGroupContent>
           <SidebarMenu>
@@ -177,8 +93,9 @@ const quitApp = async () => {
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarGroupContent>
-      </SidebarGroup>
-      <SidebarGroup>
+      </SidebarGroup> -->
+
+      <!-- <SidebarGroup>
         <SidebarGroupLabel>Приложение</SidebarGroupLabel>
         <SidebarGroupContent>
           <SidebarMenu>
@@ -205,44 +122,46 @@ const quitApp = async () => {
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarGroupContent>
-      </SidebarGroup>
-      <SidebarGroup>
-        <SidebarGroupLabel>Основное</SidebarGroupLabel>
+      </SidebarGroup> -->
+
+      <!-- <SidebarGroup>
+        <SidebarGroupLabel>МЕСИВА ЖОСКАЕЕ</SidebarGroupLabel>
         <SidebarGroupContent>
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton>
-                <RouterLink to="/">
-                  <span>Входящее</span>
-                </RouterLink>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
               <SidebarMenuButton asChild>
-                <RouterLink to="/">
-                  <span>Сегодня</span>
-                </RouterLink>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <RouterLink to="/">
-                  <span>Запланированное</span>
-                </RouterLink>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <RouterLink to="/">
-                  <span>Фильтры</span>
-                </RouterLink>
+                <AddCollectionForm />
+                <CollectionsList />
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarGroupContent>
+      </SidebarGroup> -->
+
+      <SidebarGroup>
+        <!-- <SidebarGroupLabel>Main</SidebarGroupLabel> -->
+        <SidebarGroupContent>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <RouterLink to="/inbox">
+                <SidebarMenuButton as-child>
+                  <span>Inbox</span>
+                </SidebarMenuButton>
+              </RouterLink>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <RouterLink to="/today">
+                <SidebarMenuButton as-child>
+                  <span>Today</span>
+                </SidebarMenuButton>
+              </RouterLink>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroupContent>
       </SidebarGroup>
-      <CollapsibleRoot
-        defaultOpen
+
+      <!-- <CollapsibleRoot
+        :defaultOpen="false"
         class="group/collapsible"
       >
         <SidebarGroup>
@@ -258,6 +177,13 @@ const quitApp = async () => {
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
+                  <RouterLink to="/?type=note">
+                    <span>Словарь</span>
+                  </RouterLink>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
                   <RouterLink to="/?type=project">
                     <span>Focuseek</span>
                   </RouterLink>
@@ -266,15 +192,18 @@ const quitApp = async () => {
             </SidebarMenu>
           </CollapsibleContent>
         </SidebarGroup>
-      </CollapsibleRoot>
+      </CollapsibleRoot> -->
+
       <CollapsibleRoot
-        defaultOpen
+        default-open
         class="group/collapsible"
       >
         <SidebarGroup>
-          <SidebarGroupLabel asChild>
+          <SidebarGroupLabel as-child>
             <CollapsibleTrigger>
-              Списки
+              <RouterLink to="/collections">
+                <span>Collections</span>
+              </RouterLink>
               <ChevronDown
                 class="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180"
               />
@@ -283,59 +212,21 @@ const quitApp = async () => {
           <CollapsibleContent>
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <RouterLink to="/">
-                    <span>Задачи</span>
-                  </RouterLink>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <RouterLink to="/?type=note">
-                    <span>Заметки</span>
-                  </RouterLink>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <RouterLink to="/?type=project">
+                <RouterLink to="/focuseek">
+                  <SidebarMenuButton as-child>
                     <span>Focuseek</span>
-                  </RouterLink>
-                </SidebarMenuButton>
+                  </SidebarMenuButton>
+                </RouterLink>
               </SidebarMenuItem>
             </SidebarMenu>
           </CollapsibleContent>
         </SidebarGroup>
       </CollapsibleRoot>
     </SidebarContent>
-    <!-- <SidebarFooter>
-      <SidebarMenu>
-        <SidebarMenuItem>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <SidebarMenuButton>
-                <User2 /> simpledeadly
-                <ChevronUp class="ml-auto" />
-              </SidebarMenuButton>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              side="top"
-              class="w-[--reka-popper-anchor-width]"
-            >
-              <DropdownMenuItem>
-                <span>Account</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <span>Billing</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem @click="quitApp">
-                <span>Sign out</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </SidebarMenuItem>
-      </SidebarMenu>
-    </SidebarFooter> -->
+
+    <SidebarFooter>
+      <SettingsPage />
+    </SidebarFooter>
   </Sidebar>
 </template>
 
@@ -454,5 +345,18 @@ const quitApp = async () => {
 <style lang="scss">
 .sidebar {
   background: hsl(var(--background));
+}
+
+.icon {
+  margin-left: 0.5rem;
+  color: hsl(var(--muted-foreground));
+  cursor: pointer;
+  opacity: 0.5;
+  transition: 0.05s;
+
+  &:hover {
+    color: hsl(var(--foreground));
+    opacity: 1;
+  }
 }
 </style>
