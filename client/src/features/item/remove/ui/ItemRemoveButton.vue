@@ -18,14 +18,16 @@ const { itemType } = useItemType()
 
 const toaster = () => {
   toast.info(capitalize(itemType.value) + ' deleted', {
-    description: 'It was: ' + props.item.title,
+    description: 'It was: "' + props.item.title + '" and all sub-items',
     class: 'toast',
   })
 }
 
 const handleDelete = () => {
-  emit('remove')
-  toaster()
+  if (confirm('Вы уверены, что хотите удалить этот элемент и все его подэлементы?')) {
+    emit('remove')
+    toaster()
+  }
 }
 </script>
 

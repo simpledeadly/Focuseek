@@ -10,5 +10,6 @@ export type Item = {
   createdAt: number
   editedAt: number
   isDone?: boolean
+  showSubItems?: boolean
   deadline?: string
 }

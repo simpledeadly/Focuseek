@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { ItemEntity, useItems, filterNestedItems } from '@/entities/item'
 import { AddItemForm, useAddItem } from '@/features/item/add'
 import { useChangeItemDeadline } from '@/features/item/change-deadline'
@@ -11,16 +10,16 @@ import { ItemRemoveButton, useRemoveItem } from '@/features/item/remove'
 
 import { Checkbox } from '@/shared/ui/checkbox'
 import { StickyNote } from 'lucide-vue-next'
+import { useShowSubItems } from '@/features/item/show-sub-items'
 
 const { items } = useItems()
 const { itemType, filteredItems, filteredParentItems, collectionId } = useFilterItems(items)
 const { addItem } = useAddItem(items)
 const { removeItem } = useRemoveItem(items)
 const { toggleDoneItem } = useDoneItem(items)
+const { toggleShowSubItems, hasSubItems } = useShowSubItems(items)
 const { changeItemTitle } = useChangeItemTitle(items)
 const { changeItemDeadline } = useChangeItemDeadline(items)
-
-const showSubItems = ref<boolean>(true)
 </script>
 
 <template>
@@ -58,8 +57,14 @@ const showSubItems = ref<boolean>(true)
             @save="changeItemTitle(item, $event)"
           />
         </template>
-        <template #showSubItemsToggle>
-          <Checkbox v-model="showSubItems" />
+        <template
+          #showSubItemsToggle
+          v-if="hasSubItems(item.id)"
+        >
+          <Checkbox
+            v-model="item.showSubItems"
+            @click="toggleShowSubItems(item)"
+          />
         </template>
         <template
           v-if="itemType !== 'note' && !item.isDone"
@@ -78,7 +83,7 @@ const showSubItems = ref<boolean>(true)
         </template>
         <template
           #subItems
-          v-if="showSubItems"
+          v-if="item.showSubItems"
         >
           <ItemEntity
             v-for="subItem in filterNestedItems(filteredItems, item.id)"
@@ -101,6 +106,15 @@ const showSubItems = ref<boolean>(true)
               />
             </template>
             <template
+              #showSubItemsToggle
+              v-if="hasSubItems(subItem.id)"
+            >
+              <Checkbox
+                v-model="subItem.showSubItems"
+                @click="toggleShowSubItems(subItem)"
+              />
+            </template>
+            <template
               v-if="itemType !== 'note' && !subItem.isDone"
               #timeLeft
             >
@@ -117,41 +131,41 @@ const showSubItems = ref<boolean>(true)
             </template>
             <template
               #subItems
-              v-if="showSubItems"
+              v-if="subItem.showSubItems"
             >
               <ItemEntity
-                v-for="subSubItem in filterNestedItems(filteredItems, subItem.id)"
-                :key="subSubItem.id"
+                v-for="subItem2 in filterNestedItems(filteredItems, subItem.id)"
+                :key="subItem2.id"
               >
                 <template
                   v-if="itemType !== 'note'"
                   #checkbox
                 >
                   <ItemCheckbox
-                    :model-value="subSubItem.isDone"
-                    @update:model-value="toggleDoneItem(subSubItem)"
+                    :model-value="subItem2.isDone"
+                    @update:model-value="toggleDoneItem(subItem2)"
                   />
                 </template>
                 <template #title>
                   <ItemTitle
-                    :is-done="subSubItem.isDone"
-                    :title="subSubItem.title"
-                    @save="changeItemTitle(subSubItem, $event)"
+                    :is-done="subItem2.isDone"
+                    :title="subItem2.title"
+                    @save="changeItemTitle(subItem2, $event)"
                   />
                 </template>
                 <template
-                  v-if="itemType !== 'note' && !subSubItem.isDone"
+                  v-if="itemType !== 'note' && !subItem2.isDone"
                   #timeLeft
                 >
                   <Deadline
-                    :deadline="subSubItem.deadline"
-                    @change="changeItemDeadline(subSubItem, $event)"
+                    :deadline="subItem2.deadline"
+                    @change="changeItemDeadline(subItem2, $event)"
                   />
                 </template>
                 <template #removeButton>
                   <ItemRemoveButton
-                    :item="subSubItem"
-                    @remove="removeItem(subSubItem)"
+                    :item="subItem2"
+                    @remove="removeItem(subItem2)"
                   />
                 </template>
               </ItemEntity>

@@ -42,26 +42,18 @@ model Item {
   title        String
   type         ItemType
   isDone       Boolean?
+  showSubItems Boolean?
   deadline     String?
   createdAt    DateTime  @default(now()) @map("created_at")
   editedAt     DateTime  @updatedAt @map("edited_at")
+  
   user         User      @relation(fields: [userId], references: [id])
+  
   collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
-  parent       Item?     @relation("ItemToParent", fields: [parentItemId], references: [id])
-  subtodos     Item[]    @relation("ItemToParent")
+  
+  parentItem   Item?      @relation("ItemToSubItems", fields: [parentItemId], references: [id])
+  
+  subItems     Item[]     @relation("ItemToSubItems")
   
   @@map(name: "items")
-  SubItem SubItem[] @relation(name: "ItemToSubItem")
-}
-
-model SubItem {
-  id       Int     @id @default(autoincrement())
-  title    String
-  type     ItemType
-  isDone   Boolean?
-  deadline   String?
-  parentId Int?
-  parent   Item?   @relation(fields: [parentId], references: [id], name: "ItemToSubItem") // Используйте то же имя отношения
-
-  @@map(name: "subitems")
 }

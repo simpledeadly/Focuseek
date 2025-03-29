@@ -19,6 +19,7 @@ type Item = {
   createdAt: number
   editedAt: number
   isDone?: boolean
+  showSubItems?: boolean
   deadline?: string
 }
 
@@ -172,13 +173,13 @@ app.post('/api/register', async (req, res) => {
       data: [
         {
           userId: newUser.id,
-          title: 'inbox',
+          title: 'Inbox',
           createdAt: new Date(),
           editedAt: new Date(),
         },
         {
           userId: newUser.id,
-          title: 'today',
+          title: 'Today',
           createdAt: new Date(),
           editedAt: new Date(),
         },
@@ -292,6 +293,7 @@ app.post('/api/items', authenticate, async (req, res) => {
           createdAt: new Date(item.createdAt),
           editedAt: new Date(item.editedAt),
           isDone: item.isDone,
+          showSubItems: item.showSubItems,
           deadline: item.deadline,
         },
       })
@@ -323,6 +325,7 @@ app.put('/api/items/:id', async (req, res) => {
         createdAt: new Date(updatedItem.createdAt),
         editedAt: new Date(updatedItem.editedAt),
         isDone: updatedItem.isDone,
+        showSubItems: updatedItem.showSubItems,
         deadline: updatedItem.deadline,
       },
     })
@@ -334,11 +337,23 @@ app.put('/api/items/:id', async (req, res) => {
   }
 })
 
+const deleteItemWithSubItems = async (id: number): Promise<void> => {
+  const subItems = await prisma.item.findMany({
+    where: { parentItemId: id },
+  })
+
+  for (const subItem of subItems) {
+    await deleteItemWithSubItems(subItem.id)
+  }
+
+  await prisma.item.delete({ where: { id } })
+}
+
 app.delete('/api/items/:id', async (req, res) => {
   const id = +req.params.id
 
   try {
-    await prisma.item.delete({ where: { id } })
+    await deleteItemWithSubItems(id)
     console.log(chalk.hex('#fff').bold(`DELETE item, id:`), id)
     res.status(204).json({ message: 'Элемент успешно удален' })
   } catch (error) {

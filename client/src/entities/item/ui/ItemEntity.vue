@@ -87,15 +87,14 @@ const slots = defineSlots<{
   }
 
   &:first-child {
-    border-top-left-radius: calc(var(--radius) - 2px);
-    border-top-right-radius: calc(var(--radius) - 2px);
+    // border-top-left-radius: calc(var(--radius) - 2px);
+    // border-top-right-radius: calc(var(--radius) - 2px);
   }
 
   &:last-child {
-    // border-bottom: 1px solid hsl(var(--border));
-    border-bottom: none;
-    border-bottom-right-radius: calc(var(--radius) - 2px);
-    border-bottom-left-radius: calc(var(--radius) - 2px);
+    border-bottom: 1px solid hsl(var(--border));
+    // border-bottom-right-radius: calc(var(--radius) - 2px);
+    // border-bottom-left-radius: calc(var(--radius) - 2px);
   }
 }
 

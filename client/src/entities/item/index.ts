@@ -7,6 +7,7 @@ export {
   updateItem,
   addItemToList,
   removeItemFromListById,
+  removeItemWithSubItemsFromListById,
   replaceItemInList,
 } from './lib/item'
 export { useItems } from './model/useItems'

@@ -32,6 +32,14 @@ export const addItemToList = (itemList: Item[], item: Item): Item[] => {
   return [...itemList, item]
 }
 
+export const replaceItemInList = (itemList: Item[], newItem: Item): Item[] => {
+  const idx = itemList.findIndex((item) => item.id === newItem.id)
+  if (idx > -1) {
+    return [...itemList.slice(0, idx), newItem, ...itemList.slice(idx + 1)]
+  }
+  return itemList
+}
+
 export const removeItemFromListById = (itemList: Item[], id: number): Item[] => {
   const idx = itemList.findIndex((item) => item.id === id)
   if (idx > -1) {
@@ -40,10 +48,24 @@ export const removeItemFromListById = (itemList: Item[], id: number): Item[] => 
   return itemList
 }
 
-export const replaceItemInList = (itemList: Item[], newItem: Item): Item[] => {
-  const idx = itemList.findIndex((item) => item.id === newItem.id)
+export const removeItemWithSubItemsFromListById = (itemList: Item[], id: number): Item[] => {
+  const idx = itemList.findIndex((item) => item.id === id)
   if (idx > -1) {
-    return [...itemList.slice(0, idx), newItem, ...itemList.slice(idx + 1)]
+    let updatedList = [...itemList.slice(0, idx), ...itemList.slice(idx + 1)]
+
+    let parentIds = [id]
+    while (parentIds.length > 0) {
+      const currentParentId = parentIds.pop()!
+      for (let i = 0; i < updatedList.length; i++) {
+        if (updatedList[i].parentItemId === currentParentId) {
+          parentIds.push(updatedList[i].id)
+          updatedList = [...updatedList.slice(0, i), ...updatedList.slice(i + 1)]
+          i--
+        }
+      }
+    }
+
+    return updatedList
   }
   return itemList
 }
@@ -57,16 +79,17 @@ export const filterDoneItems = (itemList: Item[]): Item[] => {
 }
 
 export const filterParentItems = (itemList: Item[]): Item[] => {
-  return itemList.filter(item => !item.parentItemId)
+  return itemList.filter((item) => !item.parentItemId)
 }
 
 export const filterNestedItems = (itemList: Item[], parentId: number): Item[] => {
-  return itemList.filter(item => item.parentItemId === parentId)
+  return itemList.filter((item) => item.parentItemId === parentId)
 }
 
 export const filterItemsByType = (itemList: Item[], type: ItemType): Item[] => {
   return itemList
     .filter((item) => item.type === type)
+    .sort((a, b) => a.id - b.id)
     .sort((a, b) => {
       const aDeadline = a.deadline ? new Date(a.deadline).getTime() : Infinity
       const bDeadline = b.deadline ? new Date(b.deadline).getTime() : Infinity
