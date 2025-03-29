@@ -2,6 +2,7 @@ export {
   createItem,
   filterItemsByType,
   filterDoneItems,
+  filterNestedItems,
   isItemType,
   updateItem,
   addItemToList,

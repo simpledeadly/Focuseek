@@ -19,9 +19,9 @@ const routes = [
   },
   // { path: '/collections/:collection/info', component: () => import('@/pages/collection'), name: 'collection' },
   {
-    path: '/account',
+    path: '/profile',
     component: () => import('@/pages/profile'),
-    name: 'account',
+    name: 'profile',
     meta: { requiresAuth: true },
   },
   {

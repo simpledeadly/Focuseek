@@ -5,13 +5,13 @@ const slots = defineSlots<{
   removeButton: () => unknown
   typeSelect?: () => unknown
   timeLeft?: () => unknown
-  showSubtodosToggle?: () => unknown
-  subtodos?: () => unknown
+  showSubItemsToggle?: () => unknown
+  subItems?: () => unknown
 }>()
 </script>
 
 <template>
-  <div class="item-entity flex items-center space-x-4 rounded-md border p-2">
+  <div class="item-entity flex items-center space-x-4 rounded-md border pt-2 pb-2">
     <div class="item-entity__row">
       <div class="item-entity__row_part">
         <div
@@ -25,14 +25,14 @@ const slots = defineSlots<{
         </div>
       </div>
       <div class="item-entity__row_part">
-        <div class="item-entity__timeLeft">
-          <slot name="timeLeft" />
-        </div>
         <div
-          v-if="slots.showSubtodosToggle"
+          v-if="slots.showSubItemsToggle"
           class="item-entity__show-todos-toggle"
         >
-          <slot name="showSubtodosToggle" />
+          <slot name="showSubItemsToggle" />
+        </div>
+        <div class="item-entity__timeLeft">
+          <slot name="timeLeft" />
         </div>
         <div class="item-entity__remove-button">
           <slot name="removeButton" />
@@ -45,19 +45,20 @@ const slots = defineSlots<{
         </div>
       </div>
     </div>
-    <ul
-      v-if="slots.subtodos"
-      class="item-entity__subtodos-list"
-    >
-      <slot name="subtodos" />
-    </ul>
   </div>
+  <ul
+    v-if="slots.subItems"
+    class="subitems-list"
+  >
+    <slot name="subItems" />
+  </ul>
 </template>
 
 <style lang="scss">
 .item-entity {
-  background: hsl(var(--primary-foreground));
-  border-bottom: none;
+  // background: hsl(var(--primary-foreground));
+  border: none;
+  border-bottom: 1px solid hsl(var(--border));
   border-radius: 0;
 
   &__row {
@@ -91,9 +92,18 @@ const slots = defineSlots<{
   }
 
   &:last-child {
-    border-bottom: 1px solid hsl(var(--border));
+    // border-bottom: 1px solid hsl(var(--border));
+    border-bottom: none;
     border-bottom-right-radius: calc(var(--radius) - 2px);
     border-bottom-left-radius: calc(var(--radius) - 2px);
+  }
+}
+
+.subitems-list {
+  margin-left: 1.5rem;
+
+  * {
+    // border-radius: 0 !important;
   }
 }
 </style>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/shared/ui/tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/ui/tooltip'
 
 const props = defineProps<{
   title: string
@@ -38,22 +38,20 @@ const cancelChanges = () => {
       <div class="collection-title__label">
         {{ props.title }}
       </div>
-      <TooltipProvider :delay-duration="0">
-        <Tooltip>
-          <TooltipTrigger as-child>
-            <button
-              type="button"
-              class="collection-title__edit-button"
-              @click="toEdit"
-            >
-              ✎
-            </button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Edit collection's title</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger as-child>
+          <button
+            type="button"
+            class="collection-title__edit-button"
+            @click="toEdit"
+          >
+            ✎
+          </button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Edit collection's title</p>
+        </TooltipContent>
+      </Tooltip>
     </div>
     <div
       v-else

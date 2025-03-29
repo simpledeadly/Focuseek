@@ -6,20 +6,29 @@ import { Toaster } from '@/shared/ui/sonner'
 import Loader from '@/widgets/loader'
 import { SidebarProvider, SidebarTrigger } from '@/shared/ui/sidebar'
 import { AppSidebar } from '@/widgets/sidebar'
+import { isAuthenticated } from './auth/auth'
+import { AppNavbar } from '@/widgets/navbar'
+import { TooltipProvider } from '@/shared/ui/tooltip'
 
 const isLoading = ref(false)
 const setLoading = (value: boolean) => (isLoading.value = value)
 </script>
 
 <template>
-  <SidebarProvider>
-    <AppSidebar />
-    <Loader v-if="isLoading" />
-    <Toaster />
-    <SidebarTrigger />
-    <div class="app">
-      <MainLayout>
-        <!-- <template #logo>
+  <TooltipProvider :delay-duration="400">
+    <SidebarProvider>
+      <AppSidebar />
+      <Loader v-if="isLoading" />
+      <Toaster
+        theme="system"
+        position="bottom-right"
+        :expand="false"
+        :close-button="false"
+      />
+      <SidebarTrigger />
+      <div class="app">
+        <MainLayout>
+          <!-- <template #logo>
           <div class="app__links">
             <a
               href="https://github.com/simpledeadly/Focuseek"
@@ -33,15 +42,22 @@ const setLoading = (value: boolean) => (isLoading.value = value)
             </a>
           </div>
         </template> -->
-        <template #main>
-          <RouterView
-            class="app__main"
-            @loading="(value: boolean) => setLoading(value)"
-          />
-        </template>
-      </MainLayout>
-    </div>
-  </SidebarProvider>
+          <template
+            v-if="isAuthenticated()"
+            #nav
+          >
+            <AppNavbar />
+          </template>
+          <template #main>
+            <RouterView
+              class="app__main"
+              @loading="(value: boolean) => setLoading(value)"
+            />
+          </template>
+        </MainLayout>
+      </div>
+    </SidebarProvider>
+  </TooltipProvider>
 </template>
 
 <style lang="scss">
@@ -84,5 +100,10 @@ const setLoading = (value: boolean) => (isLoading.value = value)
     justify-content: center;
     text-align: center;
   }
+}
+
+.toast {
+  background: hsl(var(--primary-foreground));
+  border: 1px solid hsl(var(--border));
 }
 </style>

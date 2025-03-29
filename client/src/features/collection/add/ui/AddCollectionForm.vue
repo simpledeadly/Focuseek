@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { Input } from '@/shared/ui/input'
 import { Button } from '@/shared/ui/button'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/shared/ui/tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/ui/tooltip'
 
 const emit = defineEmits<{
   (e: 'submit', value: string): void
@@ -32,24 +32,22 @@ const handleSubmit = () => {
           :placeholder="`Enter collection's title`"
           class="add-collection-form__input"
         />
-        <TooltipProvider :delay-duration="0">
-          <Tooltip>
-            <TooltipTrigger as-child>
-              <Button
-                type="button"
-                variant="secondary"
-                class="add-collection-form__input-button"
-                @click="handleSubmit"
-              >
-                <!-- <CirclePlus class="w-4 h-4" /> -->
-                <p>Add</p>
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Add new collection</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger as-child>
+            <Button
+              type="button"
+              variant="secondary"
+              class="add-collection-form__input-button"
+              @click="handleSubmit"
+            >
+              <!-- <CirclePlus class="w-4 h-4" /> -->
+              <p>Add</p>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Add new collection</p>
+          </TooltipContent>
+        </Tooltip>
       </form>
     </div>
   </div>
@@ -63,7 +61,6 @@ const handleSubmit = () => {
 .add-collection-form {
   display: flex;
   margin: 0 auto;
-  margin-top: 1rem;
 
   &__input {
     // margin-right: 2px;

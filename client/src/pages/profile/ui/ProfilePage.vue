@@ -12,7 +12,6 @@ import { Button } from '@/shared/ui/button'
 import { UserCircle } from 'lucide-vue-next'
 import DialogClose from '@/shared/ui/dialog/DialogClose.vue'
 import { useAuth } from '@/app/auth/useAuth'
-import { DropdownMenuItem } from '@/shared/ui/dropdown-menu'
 
 const { getUserId } = useAuth()
 </script>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/shared/ui/tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/ui/tooltip'
 import { useItemType } from '@/features/item/filter'
 
 const props = defineProps<{
@@ -41,22 +41,20 @@ const cancelChanges = () => {
       <div :class="props.isDone ? 'item-title__label_done' : 'item-title__label'">
         {{ props.title }}
       </div>
-      <TooltipProvider :delay-duration="0">
-        <Tooltip>
-          <TooltipTrigger as-child>
-            <button
-              type="button"
-              class="item-title__edit-button"
-              @click="toEdit"
-            >
-              ✎
-            </button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Edit {{ itemType }}'s title</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger as-child>
+          <button
+            type="button"
+            class="item-title__edit-button"
+            @click="toEdit"
+          >
+            ✎
+          </button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Edit {{ itemType }}'s title</p>
+        </TooltipContent>
+      </Tooltip>
     </div>
     <div
       v-else

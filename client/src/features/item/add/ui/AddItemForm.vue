@@ -4,11 +4,11 @@ import { Input } from '@/shared/ui/input'
 import { Button } from '@/shared/ui/button'
 import { Separator } from '@/shared/ui/separator'
 import { useFilterItems, useItemType } from '@/features/item/filter'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/shared/ui/tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/ui/tooltip'
 import { useItems } from '@/entities/item'
 
 const emit = defineEmits<{
-  (e: 'submit', value: string): void
+  (e: 'submit', data: { itemTitle: string; parentId?: number }): void
 }>()
 
 const slots = defineSlots<{
@@ -16,15 +16,18 @@ const slots = defineSlots<{
 }>()
 
 const itemTitle = ref<string>('')
+const parentId = ref<number>()
 const { itemType } = useItemType()
 
 const handleSubmit = () => {
   if (itemTitle.value.length > 0) {
-    emit('submit', itemTitle.value)
+    const data = { itemTitle: itemTitle.value, parentId: Number(parentId.value) }
+    emit('submit', data)
   } else {
     alert('Введите заголовок')
   }
   itemTitle.value = ''
+  parentId.value = undefined
 }
 
 const { items } = useItems()
@@ -44,28 +47,31 @@ const { filteredItems } = useFilterItems(items)
           :placeholder="`Enter title`"
           class="add-item-form__input"
         />
+        <Input
+          v-model="parentId"
+          type="text"
+          placeholder="parentId"
+          class="add-item-form__input"
+        />
         <slot
           v-if="slots.select"
           name="select"
         />
-        <TooltipProvider :delay-duration="0">
-          <Tooltip>
-            <TooltipTrigger as-child>
-              <Button
-                type="button"
-                variant="secondary"
-                class="add-item-form__input-button"
-                @click="handleSubmit"
-              >
-                <!-- <CirclePlus class="w-4 h-4" /> -->
-                <p>Add</p>
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Add new {{ itemType }}</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger as-child>
+            <Button
+              type="button"
+              variant="secondary"
+              class="add-item-form__input-button"
+              @click="handleSubmit"
+            >
+              <p>Add</p>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Add new {{ itemType }}</p>
+          </TooltipContent>
+        </Tooltip>
       </form>
     </div>
 
@@ -87,7 +93,6 @@ const { filteredItems } = useFilterItems(items)
 .add-item-form {
   display: flex;
   margin: 0 auto;
-  margin-top: 1rem;
   margin-bottom: 1.5rem;
 
   &__input {

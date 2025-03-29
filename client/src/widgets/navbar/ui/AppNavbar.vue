@@ -1,23 +1,36 @@
 <script setup lang="ts">
 import { Tabs, TabsList, TabsTrigger } from '@/shared/ui/tabs'
-// import { useItemType } from '@/features/item/filter'
-// const { itemType } = useItemType()
-// console.log(itemType.value)
+import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+
+const router = useRouter()
+const route = useRoute()
+
+const activeTab = computed({
+  get: () => route.query.type?.toString() || 'todo',
+  set: (value) => {
+    router.push({ query: { ...route.query, type: value } })
+  }
+})
 </script>
 
 <template>
   <nav class="app-navbar">
     <Tabs
-      default-value="todo"
+      v-model="activeTab"
       class="w-[400px] app-navbar__container"
     >
       <TabsList class="app-navbar__tabs">
-        <RouterLink to="/collections">
-          <TabsTrigger value="todo">Todos</TabsTrigger>
-        </RouterLink>
-        <RouterLink to="/collections">
-          <TabsTrigger value="note">Notes</TabsTrigger>
-        </RouterLink>
+        <TabsTrigger
+          @click="router.push({ query: { ...$route.query, type: 'todo' } })"
+          value="todo"
+          >Todos</TabsTrigger
+        >
+        <TabsTrigger
+          @click="router.push({ query: { ...$route.query, type: 'note' } })"
+          value="note"
+          >Notes</TabsTrigger
+        >
       </TabsList>
     </Tabs>
   </nav>

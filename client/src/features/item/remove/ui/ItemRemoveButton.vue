@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/shared/ui/tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/ui/tooltip'
 import { capitalize } from '@/shared/lib/utils'
 import type { Item } from '@/entities/item/types/item'
 import { useItemType } from '@/features/item/filter'
@@ -17,8 +17,9 @@ const props = defineProps<{
 const { itemType } = useItemType()
 
 const toaster = () => {
-  toast(capitalize(itemType.value) + ' deleted', {
+  toast.info(capitalize(itemType.value) + ' deleted', {
     description: 'It was: ' + props.item.title,
+    class: 'toast',
   })
 }
 
@@ -29,22 +30,27 @@ const handleDelete = () => {
 </script>
 
 <template>
-  <TooltipProvider :delay-duration="0">
-    <Tooltip>
-      <TooltipTrigger as-child>
-        <button
-          type="button"
-          class="item-remove-button"
-          @click="handleDelete"
-        >
-          <Trash2 :size="16" />
-        </button>
-      </TooltipTrigger>
-      <TooltipContent>
-        <p>Delete {{ itemType }}</p>
-      </TooltipContent>
-    </Tooltip>
-  </TooltipProvider>
+  <Tooltip>
+    <TooltipTrigger as-child>
+      <button
+        type="button"
+        class="item-remove-button"
+        @click="handleDelete"
+      >
+        <Trash2 :size="16" />
+      </button>
+    </TooltipTrigger>
+    <TooltipContent>
+      <p>
+        Delete {{ itemType }}
+        <br>
+        (id: <b>{{ item.id }}</b>)
+        <div v-if="item.parentItemId">
+          (parentId: <b>{{ item.parentItemId }}</b>)
+        </div>
+      </p>
+    </TooltipContent>
+  </Tooltip>
 </template>
 
 <style lang="scss">

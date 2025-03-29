@@ -56,6 +56,14 @@ export const filterDoneItems = (itemList: Item[]): Item[] => {
   return itemList.filter((item) => !item.isDone)
 }
 
+export const filterParentItems = (itemList: Item[]): Item[] => {
+  return itemList.filter(item => !item.parentItemId)
+}
+
+export const filterNestedItems = (itemList: Item[], parentId: number): Item[] => {
+  return itemList.filter(item => item.parentItemId === parentId)
+}
+
 export const filterItemsByType = (itemList: Item[], type: ItemType): Item[] => {
   return itemList
     .filter((item) => item.type === type)

@@ -48,10 +48,7 @@ const quitApp = async () => {
               side="top"
               class="w-[--reka-popper-anchor-width]"
             >
-              <DropdownMenuItem>
-                <span>Account</span>
-              </DropdownMenuItem>
-              <RouterLink to="/account">
+              <RouterLink to="/profile">
                 <DropdownMenuItem>
                   <span>Profile</span>
                 </DropdownMenuItem>

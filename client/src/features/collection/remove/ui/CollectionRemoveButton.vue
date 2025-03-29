@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/shared/ui/tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/ui/tooltip'
 import { Trash2 } from 'lucide-vue-next'
 import { toast } from 'vue-sonner'
 import { type Collection } from '@/entities/collection'
@@ -25,22 +25,20 @@ const handleDelete = () => {
 </script>
 
 <template>
-  <TooltipProvider :delay-duration="0">
-    <Tooltip>
-      <TooltipTrigger as-child>
-        <button
-          type="button"
-          class="collection-remove-button"
-          @click="handleDelete"
-        >
-          <Trash2 :size="16" />
-        </button>
-      </TooltipTrigger>
-      <TooltipContent>
-        <p>Delete collection</p>
-      </TooltipContent>
-    </Tooltip>
-  </TooltipProvider>
+  <Tooltip>
+    <TooltipTrigger as-child>
+      <button
+        type="button"
+        class="collection-remove-button"
+        @click="handleDelete"
+      >
+        <Trash2 :size="16" />
+      </button>
+    </TooltipTrigger>
+    <TooltipContent>
+      <p>Delete collection</p>
+    </TooltipContent>
+  </Tooltip>
 </template>
 
 <style lang="scss">

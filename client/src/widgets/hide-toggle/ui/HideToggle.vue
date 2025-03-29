@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Label } from '@/shared/ui/label'
 import { Switch } from '@/shared/ui/switch'
 
 const model = defineModel<boolean>()
